@@ -1,0 +1,76 @@
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+#contain {
+    display: block;
+    position: relative;
+    /* top: 10px; */
+    margin: auto;
+    width: 500px;
+}
+
+#affTime {
+    position: absolute;
+    top: 190px;
+    left: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 120px;
+    width: 250px;
+    /* background-color: red; */
+    z-index: 100;
+}
+#workSet {
+    position: absolute;
+    top: 145px;
+    left: 190px;
+    color: rgba(255,255,255,0.6)
+}
+#pauseSet {
+    position: absolute;
+    top: 165px;
+    left: 190px;
+    color: rgba(255,255,255,0.6)
+}
+#pomorep {
+    position: absolute;
+    top: 340px;
+    left: 215px;
+    color: rgba(255,255,255,0.6)
+}
+#etat {
+    position: absolute;
+    top: 190px;
+    left: 218px;
+    color: rgba(255,255,255);
+    font-weight: bolder;
+}
+
+.panel {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    color: white;
+    /* border: 1px solid #fff; */
+    height: 100px;
+    width: 60px;
+}
+.panel span:first-child {
+    font-size: 3.5em;
+}
+#timeOut {
+    z-index: 100;
+    display: block;
+    position: absolute;
+    top: 215px;
+    left: 100px;
+    color: red;
+    font-size: 4em;
+
+}

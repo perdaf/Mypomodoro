@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pomodoro</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="jumbotron">
+                    <h1 class="display-5">POMODORO</h1>
+                    <span>Enter your Pomodoro setting</span>
+                    <hr>
+                    <form>
+                        <h6>Works timer settings</h6>
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="number" class="form-control" placeholder="Hours" id="getHours" name="getHours" value="0">
+                            </div>
+                            <div class="col">
+                                <input type="number" class="form-control" placeholder="Minutes" id="getMinute" name="getMinutes" value="0">
+                            </div>
+                            <div class="col">
+                                <input type="number" class="form-control" placeholder="Secondes" id="getSecondes" name="getSecondes" value="0">
+                            </div>
+                        </div>
+                        <br>
+                        <h6>Pause timer settings</h6>
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="number" class="form-control" placeholder="Hours" id="getPauseHours" name="getPauseHours" value="0">
+                            </div>
+                            <div class="col">
+                                <input type="number" class="form-control" placeholder="Minutes" id="getPauseMinute" name="getPauseMinute" value="0">
+                            </div>
+                            <div class="col">
+                                <input type="number" class="form-control" placeholder="Secondes" id="getPauseSecondes" name="getPauseSecondes" value="0">
+                            </div>
+                        </div>
+                        <br>
+                        <h6>Repeat</h6>
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="number" class="form-control" placeholder="Repeat" id="getNbRepeat" name="getNbRepeat" value="0">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-row">
+                            <div class="col">
+                                <input type="button" value="Validate" class="btn btn-light btn-block" onclick="setTimer()">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div id="contain">
+                    <canvas id="myCanvas" width="500" height="500"></canvas>
+        
+                    <div id="workSet">Work: 00:00:00</div>
+                    <div id="pauseSet">Pause: 00:00:00</div>
+                    <div id="pomorep">Pomo 1/5</div>
+                    <div id="etat">PAUSE</div>
+        
+                    <div id="affTime">
+                        <div id="hours" class="panel"></div>
+                        <div id="min" class="panel"></div>
+                        <div id="sec" class="panel"></div>
+                    </div>
+                    <div id="timeOut"></div>
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-outline-dark btn-block" id="btnStart"><i class="material-icons">
+                                    play_arrow
+                                </i></button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-outline-dark btn-block" id="btnPause" disabled><i class="material-icons">
+                                    pause
+                                </i></button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-outline-dark btn-block" id="btnReinit"><i class="material-icons">
+                                    <i class="material-icons">
+                                        restore
+                                    </i>
+                                </i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <script src="./js/lib.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+
+</html>
