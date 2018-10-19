@@ -25,26 +25,30 @@ html, body {
 }
 #workSet {
     position: absolute;
+    width: 500px;
+    text-align: center;
     top: 145px;
-    left: 190px;
     color: rgba(255,255,255,0.6)
 }
 #pauseSet {
     position: absolute;
+    width: 500px;
+    text-align: center;
     top: 165px;
-    left: 190px;
     color: rgba(255,255,255,0.6)
 }
 #pomorep {
     position: absolute;
+    width: 500px;
+    text-align: center;
     top: 340px;
-    left: 215px;
     color: rgba(255,255,255,0.6)
 }
 #etat {
     position: absolute;
+    width: 500px;
+    text-align: center;
     top: 190px;
-    left: 218px;
     color: rgba(255,255,255);
     font-weight: bolder;
 }

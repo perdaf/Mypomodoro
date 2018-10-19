@@ -1,3 +1,20 @@
+let pomorepactu = 0
+let pomoRepAff = 0
+
+function createPomo(worktime, pausetime, pomorep) {
+      
+    pomoRepAff = pomorep
+
+    affWorkSet.innerHTML = `Work: ${wHours}:${wMin}:${wSec}`
+    affPauseSet.innerHTML = `Pause: ${pHours}:${pMin}:${pSec}`
+    affPomoRep.innerHTML = `Pomo: ${pomorepactu}/${pomoRepAff}`
+    affEtat.innerHTML = etatPom[0]
+
+    // -------------------------------------
+    pomo = new Countdown(worktime)
+    pomo.init()
+}
+
 function Countdown(t) {
     this.timer = t
     this.hours = 0
@@ -9,6 +26,8 @@ function Countdown(t) {
         
         this.timerid = 0
         this.pause = true
+        reset = true
+        pomorepactu += 1
     
         const time = this.timer.split(":")
         this.hours = parseInt(time[0])
@@ -23,7 +42,7 @@ function Countdown(t) {
         if (isNaN(this.sec)) {
             this.sec = 0
         }
-        
+        affPomoRep.innerHTML = `Pomo: ${pomorepactu}/${pomoRepAff}`
         reDrawCanvas()
         drawText(this.hours, this.min, this.sec)
         this.setTimer()
@@ -31,7 +50,6 @@ function Countdown(t) {
         
     
     this.startTimer = function() {
-        
         this.pause = false
         this.timerid = setInterval(() => {
             this.setTimer()
@@ -67,9 +85,11 @@ function Countdown(t) {
                         affTime.style.display = 'none'
                         timeOut.style.display = 'block'
                         timeOut.innerHTML = 'TIME OUT'
+                        btnstartTimer.disabled = true
+                        btnpauseTimer.disabled = true
                         this.stopTimer()
                         // trouver un moyen de remonter que time out ok
-                    
+                        
                     } else {
                         drawText(this.hours, this.min, this.sec)
                         // console.log(`Encore ${this.hours} heur(s)`)
@@ -124,14 +144,12 @@ function reDrawCanvas() {
     ctx.stroke()
 }
 
-
 function drawText(heur, min, sec) {
 
     heurPanel.innerHTML = `<span>${heur<10?'0':''}${heur}</span><span>heur${heur>1?'s':''}</span>`
     minPanel.innerHTML = `<span>${min<10?'0':''}${min}</span><span>minute${min>1?'s':''}</span>`
     secPanel.innerHTML = `<span>${sec<10?'0':''}${sec}</span><span>seconde${sec>1?'s':''}</span>`
 }
-
 
 function drawArc(radius, strokeSize, time) {
     

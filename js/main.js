@@ -1,4 +1,4 @@
-// import Countdown from './Countdown.js';
+const { fromEvent, Subject } = rxjs;
 
 // Recup des elements du dom ------------
 const heurPanel = document.getElementById('hours')
@@ -27,7 +27,8 @@ const affPauseSet = document.getElementById("pauseSet")
 const affPomoRep = document.getElementById("pomorep")
 const affEtat = document.getElementById("etat")
 
-let btnplay = true;
+const cont = document.getElementById('contain')
+
 
 // declaration du canvas ----------------
 const canvas = document.getElementById('myCanvas')
@@ -37,11 +38,20 @@ ctx.lineCap = 'butt'
 
 // variables -------------------------
 let wHours, wMin, wSec,
-    pHours, pMin, pSec,
-    pomoRep, workTime,
-    pauseTime, countWork, countpause
+pHours, pMin, pSec,
+pomoRep, workTime,
+pauseTime, countWork, countpause
 
+let btnplay = true
 const valMax = 60
+
+let pomo
+
+let etatPom = ["WORK", "PAUSE"]
+// -----------------------------------
+
+cont.style.display = "none"
+
 
 function setTimer() {
     wHours = parseInt(Wthours.value > 60 ? 60 : Wthours.value)
@@ -54,56 +64,40 @@ function setTimer() {
 
     workTime = `${wHours}:${wMin}:${wSec}`
     pauseTime = `${pHours}:${pMin}:${pSec}`
-
-    affWorkSet.innerHTML = `Work: ${wHours}:${wMin}:${wSec}`
-    affPauseSet.innerHTML = `Pause: ${pHours}:${pMin}:${pSec}`
-    affPomoRep.innerHTML = `Pomo: ${pomoRep}/${pomoRep}`
-
-    async function start() {
-        let pomo = await createPomo(workTime, "PAUSE")  
-        console.log('pomo isDone >>> ')
-    }
-    start()
-    
-    // createPomo(workTime, "PAUSE")
+  
+    createPomo(workTime, pauseTime, pomoRep)
+    cont.style.display = "block"
 }
 
-Rx.fromEvent(btnstartTimer, 'click').subscribe(() => console.log("play click"))
 
+btnstartTimer.addEventListener("click", (e) => {
+    e.preventDefault()
+    if(btnplay) {
+        pomo.startTimer()
+        btnstartTimer.disabled = true
+        btnpauseTimer.disabled = false
+        btnplay = false
+    }
+})
 
-// function createPomo(time, type) {   
-//     const pomo = new Countdown(time)
-//     affEtat.innerHTML = type
-//     pomo.init()
+btnpauseTimer.addEventListener("click", (e) => {
+    e.preventDefault()
+    if(!btnplay) {
+        pomo.pauseTimer()
+        btnstartTimer.disabled = false
+        btnpauseTimer.disabled = true
+        btnplay = true
+    }
+})
 
-//     btnstartTimer.addEventListener("click", (e) => {
-//         e.preventDefault()
-//         if(btnplay) {
-//             pomo.startTimer()
-//             btnstartTimer.disabled = true
-//             btnpauseTimer.disabled = false
-//             btnplay = false
-//         }
-//     })
-    
-//     btnpauseTimer.addEventListener("click", (e) => {
-//         e.preventDefault()
-//         if(!btnplay) {
-//             pomo.pauseTimer()
-//             btnstartTimer.disabled = false
-//             btnpauseTimer.disabled = true
-//             btnplay = true
-//         }
-//     })
-    
-//     btnreplayTimer.addEventListener("click", (e) => {
-//         e.preventDefault()
-//         pomo.reInitTimer()
-//         btnstartTimer.disabled = false
-//         btnpauseTimer.disabled = true
-//         btnplay = true
-//     })
-// }
+btnreplayTimer.addEventListener("click", (e) => {
+    e.preventDefault()
+    pomo.reInitTimer()
+    btnstartTimer.disabled = false
+    btnpauseTimer.disabled = true
+    btnplay = true
+
+})
 
 
 
