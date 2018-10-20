@@ -36,7 +36,7 @@ const ctx = canvas.getContext('2d')
 
 ctx.lineCap = 'butt'
 
-// variables -------------------------
+// variables Globales -------------------------
 let wHours, wMin, wSec,
 pHours, pMin, pSec,
 pomoRep, workTime,
@@ -47,7 +47,6 @@ const valMax = 60
 
 let pomo
 
-let etatPom = ["WORK", "PAUSE"]
 // -----------------------------------
 
 cont.style.display = "none"
@@ -65,8 +64,10 @@ function setTimer() {
     workTime = `${wHours}:${wMin}:${wSec}`
     pauseTime = `${pHours}:${pMin}:${pSec}`
   
-    createPomo(workTime, pauseTime, pomoRep)
+    initAffInfoTimerRep()
     cont.style.display = "block"
+    
+
 }
 
 

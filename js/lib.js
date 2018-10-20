@@ -1,120 +1,172 @@
+// variables GLOBAL -----------------------------
 let pomorepactu = 0
-let pomoRepAff = 0
+let typeTimer
+let etatPom = ["WORK", "PAUSE"]
+let compteboucle = 0
 
-function createPomo(worktime, pausetime, pomorep) {
-      
-    pomoRepAff = pomorep
+// initAffInfoTimerRep() -----------------------------------
+function initAffInfoTimerRep() {
+    btnstartTimer.disabled = false
+    btnpauseTimer.disabled = true
+    affTime.style.display = 'flex'
+    timeOut.style.display = 'none'
+    btnplay = true
+
+    pomorepactu = 0
+    compteboucle = 0
 
     affWorkSet.innerHTML = `Work: ${wHours}:${wMin}:${wSec}`
     affPauseSet.innerHTML = `Pause: ${pHours}:${pMin}:${pSec}`
-    affPomoRep.innerHTML = `Pomo: ${pomorepactu}/${pomoRepAff}`
-    affEtat.innerHTML = etatPom[0]
+    affPomoRep.innerHTML = `Pomo: ${pomorepactu}/${pomoRep}`
 
-    // -------------------------------------
-    pomo = new Countdown(worktime)
+    createCounter(0)  
+}
+
+// createPomo() ----------------------
+function createCounter(timetype) {
+    
+    if(timetype == 0) {
+        typeTimer = workTime
+        affEtat.innerHTML = etatPom[0]
+    }
+    if(timetype == 1) {
+        typeTimer = pauseTime
+        affEtat.innerHTML = etatPom[1]
+    }
+
+    if(pomo){ delete pomo}
+    
+    pomo = new Countdown(typeTimer)
     pomo.init()
 }
 
-function Countdown(t) {
-    this.timer = t
-    this.hours = 0
-    this.min = 0
-    this.sec = 0
-    this.pause = true
+// verifLoop() ------------------------
+function verifLoop() {
     
-    this.init = function () {
-        
-        this.timerid = 0
-        this.pause = true
-        reset = true
+    compteboucle += 1
+    if(compteboucle == 2) {
+        compteboucle = 0
         pomorepactu += 1
+    }
+    console.log("pomoRepActu >>> ", pomorepactu)
+
+    if(pomorepactu < pomoRep) {
+        
+        pomo.stopTimer()
+        
+        if(typeTimer == workTime) {
+            createCounter(1)
+            pomo.startTimer()
+        }else if (typeTimer == pauseTime) {
+            createCounter(0)
+            pomo.startTimer()
+        }
+        
+
+    }else {
+        pomo.stopTimer()
+        reDrawCanvas()
+        drawArc(140, 7, this.sec)
+        affTime.style.display = 'none'
+        timeOut.style.display = 'block'
+        timeOut.innerHTML = 'TIME OUT'
+        btnstartTimer.disabled = true
+        btnpauseTimer.disabled = true
+        return true
+           
+    }
     
+}
+
+// countdown *******************************
+function Countdown(t) {
+     this.timer = t
+     this.hours = 0
+     this.min = 0
+     this.sec = 0
+     this.timerid = 0
+     this.pause = true
+     this.reset = true
+    
+    // init() --------------------------------
+    this.init = function() {
+        this.timerid = 0
         const time = this.timer.split(":")
         this.hours = parseInt(time[0])
         this.min = parseInt(time[1])
         this.sec = parseInt(time[2])
-        if (isNaN(this.hours)) {
-            this.hours = 0
+        if (isNaN(hours)) {
+            hours = 0
         }
-        if (isNaN(this.min)) {
-            this.min = 0
+        if (isNaN(min)) {
+            min = 0
         }
-        if (isNaN(this.sec)) {
-            this.sec = 0
+        if (isNaN(sec)) {
+            sec = 0
         }
-        affPomoRep.innerHTML = `Pomo: ${pomorepactu}/${pomoRepAff}`
+        
         reDrawCanvas()
         drawText(this.hours, this.min, this.sec)
         this.setTimer()
     }
         
-    
+    // startTimer() -------------------------- 
     this.startTimer = function() {
         this.pause = false
         this.timerid = setInterval(() => {
             this.setTimer()
         }, 1000)
     }
-    
+    // pauseTimer() --------------------------
     this.pauseTimer = function() {
         clearInterval(this.timerid)
         this.pause = true
     }
-    
+    // reinitTimer() ------------------------
     this.reInitTimer = function() {
         affTime.style.display = 'flex'
         timeOut.style.display = 'none'
         this.stopTimer()
         this.init()
     }
-    
+    // stopTimer() ------------------------
     this.stopTimer = function() {
         clearInterval(this.timerid)
     }
     
+    // setTimer() ------------------------
     this.setTimer = function() {
-
-        if(!this.pause){
-
-            if (this.sec <= 0) {
-                if (this.min <= 0) {
-                    if (this.hours <= 0) {
-                        // console.log('*** done ***')
-                        reDrawCanvas()
-                        drawArc(140, 7, this.sec)
-                        affTime.style.display = 'none'
-                        timeOut.style.display = 'block'
-                        timeOut.innerHTML = 'TIME OUT'
-                        btnstartTimer.disabled = true
-                        btnpauseTimer.disabled = true
-                        this.stopTimer()
-                        // trouver un moyen de remonter que time out ok
-                        
-                    } else {
-                        drawText(this.hours, this.min, this.sec)
-                        // console.log(`Encore ${this.hours} heur(s)`)
-                        this.hours--
-                        drawArc(200, 17, this.hours)
-                        this.min = 60
-                        // this.startTimer()
-                    }
-                } else {
-                    drawText(this.hours, this.min, this.sec)
-                    this.min--
-                    // console.log(`Encore ${this.min} minute(s)`)
-                    drawArc(170, 12, this.min)
-                    this.sec = 60
-                    // this.startTimer()
-                }
-            } else {
-                drawText(this.hours, this.min, this.sec)
-                drawArc(140, 9, this.sec)
-            }
-            reDrawCanvas()
+        affPomoRep.innerHTML = `Pomo: ${pomorepactu + 1}/${pomoRep}`
+        reDrawCanvas()
             drawArc(200, 17, this.hours)
             drawArc(170, 12, this.min)
             drawArc(140, 7, this.sec)
-            this.sec--
+
+        if(!this.pause){
+            if (this.sec <= 0) {
+                if (this.min <= 0) {
+                    if (this.hours <= 0) {
+
+                        verifLoop()
+                        
+                    } else {
+                        this.min = 60
+                        this.hours--
+                        drawArc(200, 17, this.hours)
+                        drawText(this.hours, this.min, this.sec)
+                    }
+                } else {
+                    this.sec = 59
+                    this.min--
+                    drawArc(170, 12, this.min)
+                    drawText(this.hours, this.min, this.sec)
+                }
+            } else {
+                drawText(this.hours, this.min, this.sec)
+                drawArc(140, 7, this.sec)
+                this.sec--
+            }
+            
         }
     }
 
