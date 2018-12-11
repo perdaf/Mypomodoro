@@ -1,5 +1,3 @@
-const { fromEvent, Subject } = rxjs;
-
 // Recup des elements du dom ------------
 const heurPanel = document.getElementById('hours')
 const minPanel = document.getElementById('min')

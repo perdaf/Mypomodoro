@@ -3,6 +3,9 @@ let pomorepactu = 0
 let typeTimer
 let etatPom = ["WORK", "PAUSE"]
 let compteboucle = 0
+const departAudio = new Audio('./audio/depart.mp3')
+const finAudio = new Audio('./audio/fin.mp3')
+const endAudio = new Audio('./audio/end_01.mp3')
 
 // initAffInfoTimerRep() -----------------------------------
 function initAffInfoTimerRep() {
@@ -28,10 +31,12 @@ function createCounter(timetype) {
     if(timetype == 0) {
         typeTimer = workTime
         affEtat.innerHTML = etatPom[0]
+        departAudio.play()
     }
     if(timetype == 1) {
         typeTimer = pauseTime
         affEtat.innerHTML = etatPom[1]
+        finAudio.play()
     }
 
     if(pomo){ delete pomo}
@@ -67,6 +72,7 @@ function verifLoop() {
         pomo.stopTimer()
         reDrawCanvas()
         drawArc(140, 7, this.sec)
+        endAudio.play()
         affTime.style.display = 'none'
         timeOut.style.display = 'block'
         timeOut.innerHTML = 'TIME OUT'

@@ -76,5 +76,17 @@ html, body {
     left: 100px;
     color: red;
     font-size: 4em;
+}
+.col {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center; */
+    align-content: center;
+}
 
+label {
+    padding: 2px;
+    margin: 0;
+    font-size: 0.7em;
+    color: rgba(0,0,0,0.4);
 }
